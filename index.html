@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detective Chat Login</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style>
+        body {
+            background: radial-gradient(circle at top, #0a0a1a, #000);
+            color: #0ff;
+            font-family: "Courier New", monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #box {
+            background: rgba(20, 20, 30, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 30px #0ff;
+            text-align: center;
+            animation: fadeIn 1.2s ease;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #0ff;
+            animation: glowText 2s infinite alternate;
+        }
+
+        input {
+            padding: 12px;
+            width: 100%;
+            margin-top: 12px;
+            background: #111;
+            border: 1px solid #0ff;
+            color: #0ff;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px #0ff;
+            transform: scale(1.05);
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px;
+            width: 100%;
+            background: linear-gradient(90deg, #06f, #0ff);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px #0ff;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0ff, #06f);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #0ff;
+        }
+
+        @keyframes glowText {
+            from {
+                text-shadow: 0 0 5px #0ff;
+            }
+
+            to {
+                text-shadow: 0 0 20px #0ff, 0 0 30px #0ff;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h2>access?</h2>
+        <input id="name" placeholder="Codename (username)">
+        <input id="code" placeholder="Enter password" type="password">
+        <button onclick="go()">Enter Chat</button>
+        <p id="error" style="color:red; display:none; margin-top:10px;">❌ Wrong Code</p>
+    </div>
+
+    <script>
+   
+        const SECRET_CODE = "fkoffbruh";
+
+        function go() {
+            let name = document.getElementById("name").value.trim() || ("Agent" + Math.floor(Math.random() * 1000));
+            let code = document.getElementById("code").value.trim();
+
+            if (code === SECRET_CODE) {
+                sessionStorage.setItem("username", name);
+                window.location = "chat.html";
+            } else {
+                let err = document.getElementById("error");
+                err.style.display = "block";
+                err.style.animation = "shake 0.3s";
+                setTimeout(() => err.style.animation = "", 400);
+            }
+        }
+
+  
+        const style = document.createElement('style');
+        style.innerHTML = `
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+  `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>
