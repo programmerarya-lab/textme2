@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Decrypt Message</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    body{background:#050510;color:#0ff;font-family:monospace;display:flex;justify-content:center;align-items:center;height:100vh;}
+    #box{background:#111;padding:20px;border-radius:12px;box-shadow:0 0 20px #0ff;text-align:center;width:90%;max-width:500px;}
+    textarea,input{width:100%;margin:8px 0;padding:8px;background:#222;color:#0ff;border:none;border-radius:6px;}
+    button{margin-top:10px;padding:10px 20px;background:#08f;color:white;border:none;border-radius:6px;cursor:pointer;}
+    button:hover{background:#0af;}
+  </style>
+</head>
+<body>
+<div id="box">
+  <h2>Decrypt a Message</h2>
+  <textarea id="cipher" rows="4" placeholder="Paste encrypted text here"></textarea>
+  <input id="code" placeholder="Enter code">
+  <button onclick="decryptMsg()">Decrypt</button>
+  <p id="result"></p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script>
+function decryptMsg(){
+  let c=document.getElementById("cipher").value.trim();
+  let key=document.getElementById("code").value.trim();
+  if(!c||!key) return;
+  try{
+    let bytes=CryptoJS.AES.decrypt(c,key);
+    let text=bytes.toString(CryptoJS.enc.Utf8);
+    document.getElementById("result").textContent="Decrypted: "+(text||"[Wrong code]");
+  }catch(e){
+    document.getElementById("result").textContent="Error";
+  }
+}
+</script>
+</body>
+</html>
